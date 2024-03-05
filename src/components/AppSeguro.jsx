@@ -7,7 +7,7 @@ export default function AppSeguro() {
           Cotizador de Seguros de Autos
         </h1>
       </header>
-      <main className="bg-white md:w-2/3 lg:w-2/4 sm:mx-2 mx-auto shadow rounded-md p-10">
+      <main className="bg-white md:w-2/3 lg:w-2/4 mx-auto shadow rounded-md p-10">
         <Formulario />
       </main>
     </>
