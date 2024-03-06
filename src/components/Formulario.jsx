@@ -1,9 +1,28 @@
 import { MARCAS, YEARS, PLANES } from "../constants";
 import { Fragment } from "react";
+import useCotizador from "../hooks/useCotizador";
+import Error from "./Error";
 export default function Formulario() {
+  const { datos, handleChangeDatos, error, setError, cotizarSeguro } =
+    useCotizador();
+  const { marca, ano } = datos;
+  function handleSumbit(e) {
+    e.preventDefault();
+    if (
+      Object.values(datos).includes("") ||
+      Object.values(datos).includes("0")
+    ) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+    setError("");
+    cotizarSeguro();
+  }
+
   return (
     <>
-      <form>
+      {error && <Error />}
+      <form onSubmit={handleSumbit}>
         <div className="my-5">
           <label
             htmlFor="marca"
@@ -15,6 +34,8 @@ export default function Formulario() {
             name="marca"
             id="marca"
             className="w-full p-3 bg-white border border-gray-200 rounded-md"
+            onChange={handleChangeDatos}
+            value={marca}
           >
             <option value="0">---Seleccione Marca---</option>
             {MARCAS.map((v) => (
@@ -34,6 +55,8 @@ export default function Formulario() {
           <select
             name="ano"
             id="ano"
+            onChange={handleChangeDatos}
+            value={ano}
             className="w-full p-3 bg-white border border-gray-200 rounded-md"
           >
             <option value="0">---Seleccione Año---</option>
@@ -54,13 +77,13 @@ export default function Formulario() {
           <div className="flex gap-3 items-center">
             {PLANES.map((v) => (
               <Fragment key={v.id}>
-                {" "}
                 <label htmlFor={v.nombre}>{v.nombre}</label>{" "}
                 <input
                   type="radio"
                   name="plan"
                   id={v.nombre}
-                  value={v.nombre}
+                  value={v.id}
+                  onChange={handleChangeDatos}
                 />
               </Fragment>
             ))}
