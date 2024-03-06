@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { MARCAS, PLANES } from "../constants";
 export default function Cotizacion({ datos, cotizacion }) {
   const { marca, ano, plan } = datos;
