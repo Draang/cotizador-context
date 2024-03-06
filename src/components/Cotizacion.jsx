@@ -1,10 +1,19 @@
 import PropTypes from "prop-types";
+import { useCallback, useMemo, useRef } from "react";
 import { MARCAS, PLANES } from "../constants";
 export default function Cotizacion({ datos, cotizacion }) {
   const { marca, ano, plan } = datos;
+  const nombreMarca = useCallback(
+    MARCAS.find((e) => e.id === parseInt(marca)).nombre,
+    [cotizacion]
+  );
+  const nombrePlan = useCallback(
+    PLANES.find((e) => e.id === parseInt(plan)).nombre,
+    [cotizacion]
+  );
+  const anoRef = useRef(ano);
   if (cotizacion === 0) return null;
-  const nombreMarca = MARCAS.find((e) => e.id === parseInt(marca)).nombre;
-  const nombrePlan = PLANES.find((e) => e.id === parseInt(plan)).nombre;
+
   return (
     <div className="bg-gray-100 text-center mt-5 p-5 shadow">
       {" "}
@@ -19,7 +28,7 @@ export default function Cotizacion({ datos, cotizacion }) {
       </p>
       <p className="my2 font-semibold">
         <span className="font-bold text-gray-600">Año del auto: </span>
-        {ano}
+        {anoRef.current}
       </p>
       <p className="my2 font-semibold text-2xl">
         <span className="font-bold text-gray-600">Total cotizacion: </span>
