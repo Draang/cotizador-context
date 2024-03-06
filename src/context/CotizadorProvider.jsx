@@ -10,6 +10,8 @@ export function CotizadorProvider({ children }) {
   });
 
   const [error, setError] = useState("");
+  const [cotizacion, setCotizacion] = useState(0);
+  const [cargando, setCargando] = useState(false);
 
   useEffect(() => {
     if (error != "") {
@@ -34,12 +36,24 @@ export function CotizadorProvider({ children }) {
     // PLAN  basico: 15%+, Completo: 25%+, premium: 50%+
     base = base + base * calcularPlan(datos.plan);
     const money = formatDinero(base);
-    console.log(money);
+    setCargando(true);
+    setTimeout(() => {
+      setCotizacion(money);
+      setCargando(false);
+    }, 2500);
   }
 
   return (
     <CotizadorContext.Provider
-      value={{ datos, handleChangeDatos, error, setError, cotizarSeguro }}
+      value={{
+        datos,
+        handleChangeDatos,
+        error,
+        setError,
+        cotizarSeguro,
+        cotizacion,
+        cargando
+      }}
     >
       {children}
     </CotizadorContext.Provider>
